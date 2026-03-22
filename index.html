@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>autobio - The Intelligence Production System for Biology</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .bg-grid-pattern {
+            background-image: 
+                linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-black text-zinc-200 font-sans selection:bg-cyan-900 selection:text-cyan-100 overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 border-b border-white/10 bg-black">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2 group cursor-pointer">
+                <img src="logo/autobiologodark.jpg" alt="autobio logo" class="h-8 object-contain">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page 1: Hero Section -->
+    <section class="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden min-h-screen flex items-center bg-black">
+        <!-- Amino Acid Canvas Animation -->
+        <canvas id="aminoCanvas" class="absolute inset-0 z-0 pointer-events-none"></canvas>
+        
+        <!-- Subtle radial overlay -->
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0)_0%,rgba(0,0,0,0.7)_100%)] z-0 pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10 w-full flex flex-col items-center justify-center text-center">
+            <div class="max-w-4xl">
+                <!-- Slogan Rotator -->
+                <div id="sloganRotator" class="grid mb-8">
+                    <h1 class="slogan text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tighter leading-[1.1] transition-all duration-1000 ease-in-out opacity-100 translate-y-0 z-10" style="grid-area: 1 / 1;">
+                        The Operating System for Autonomous Biomed
+                    </h1>
+                    <h1 class="slogan text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tighter leading-[1.1] transition-all duration-1000 ease-in-out opacity-0 translate-y-8 -z-10 pointer-events-none" style="grid-area: 1 / 1;">
+                        The AI Factory for Biology and Medicine
+                    </h1>
+                    <h1 class="slogan text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tighter leading-[1.1] transition-all duration-1000 ease-in-out opacity-0 translate-y-8 -z-10 pointer-events-none" style="grid-area: 1 / 1;">
+                        Scale Your Biomed Team 100x
+                    </h1>
+                </div>
+                <p class="text-xl md:text-2xl text-zinc-400 mb-12 leading-relaxed max-w-3xl mx-auto font-light">
+                    autobio orchestrates a new biomed stack: AI agents for reasoning, laboratory systems for execution, clinical systems for action, and biological models for learning. All unified into one operating system.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page 2: Manifesto & Closing CTA -->
+    <section id="manifesto" class="py-40 border-t border-white/10 relative bg-black overflow-hidden text-center min-h-screen flex items-center justify-center">
+        <div class="absolute inset-0 bg-grid-pattern opacity-30"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-900/10 blur-[120px] rounded-full pointer-events-none"></div>
+        
+        <div class="max-w-4xl mx-auto px-6 relative z-10">
+            <div class="fade-in transition-all duration-1000 ease-out opacity-0 translate-y-12 flex flex-col gap-12">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight">
+                    Biomedicine was built on human labor.<br/>
+                    <span class="text-zinc-500">We are rebuilding it as a programmable system.</span>
+                </h2>
+                
+                <p class="text-xl md:text-2xl text-zinc-400 font-light leading-relaxed max-w-3xl mx-auto">
+                    AI agents reason, robotic systems execute, and biological models learn. Together, they form a coordinated workforce across digital, physical, and biological worlds.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-12 bg-black">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-zinc-500">
+            <div class="flex items-center gap-2">
+                <span class="font-medium">@ 2026 autobio, Inc. All rights reserved.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // --- Scroll Animation (Fade In) ---
+        const observerOptions = {
+            threshold: 0.1
+        };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.remove('opacity-0', 'translate-y-12');
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // --- Slogan Rotator Logic ---
+        const slogans = document.querySelectorAll('.slogan');
+        let currentSloganIndex = 0;
+
+        setInterval(() => {
+            // Hide current
+            slogans[currentSloganIndex].classList.remove('opacity-100', 'translate-y-0', 'z-10');
+            slogans[currentSloganIndex].classList.add('opacity-0', 'translate-y-8', '-z-10', 'pointer-events-none');
+            
+            // Move to next
+            currentSloganIndex = (currentSloganIndex + 1) % slogans.length;
+            
+            // Show next
+            slogans[currentSloganIndex].classList.remove('opacity-0', 'translate-y-8', '-z-10', 'pointer-events-none');
+            slogans[currentSloganIndex].classList.add('opacity-100', 'translate-y-0', 'z-10');
+        }, 4000); // Rotate every 4 seconds
+
+        // --- Canvas Animation Logic ---
+        const canvas = document.getElementById('aminoCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const aminoAcids = "ARNDCQEGHILKMFPSTWYV".split("");
+        const targetWordsList = ['LabOS', 'ScienceOS', 'MedOS', 'VIRTUAL CELL'];
+
+        let cols = 0;
+        let rows = 0;
+        const fontSize = 16;
+        let grid = [];
+        let placements = [];
+        let animationFrameId;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            cols = Math.floor(canvas.width / fontSize);
+            rows = Math.floor(canvas.height / fontSize);
+            
+            // Initialize background matrix
+            grid = Array.from({ length: rows }, () => 
+                Array.from({ length: cols }, () => aminoAcids[Math.floor(Math.random() * aminoAcids.length)])
+            );
+
+            // Initialize or update dynamic placements
+            if (placements.length === 0) {
+                placements = targetWordsList.map(text => {
+                    const maxLife = Math.floor(Math.random() * 200) + 150; // 150 to 350 frames
+                    return {
+                        text: text.toUpperCase(),
+                        x: Math.floor(Math.random() * Math.max(1, cols - text.length)),
+                        y: Math.floor(Math.random() * rows),
+                        life: maxLife,
+                        maxLife: maxLife
+                    };
+                });
+            } else {
+                // Constrain existing placements to new bounds on resize
+                placements.forEach(p => {
+                    p.x = Math.min(p.x, Math.max(0, cols - p.text.length));
+                    p.y = Math.min(p.y, rows - 1);
+                });
+            }
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function drawCanvas() {
+            // Dark background fill
+            ctx.fillStyle = '#000000'; // pure black
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.font = `bold ${fontSize - 2}px monospace`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            // Update placements lifecycle
+            placements.forEach(p => {
+                p.life--;
+                if (p.life <= 0) {
+                    p.x = Math.floor(Math.random() * Math.max(1, cols - p.text.length));
+                    p.y = Math.floor(Math.random() * rows);
+                    p.maxLife = Math.floor(Math.random() * 300) + 150; 
+                    p.life = p.maxLife;
+                }
+            });
+
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    // Continuous biological mutation (slowed down for natural feel)
+                    if (Math.random() < 0.002) {
+                        grid[y][x] = aminoAcids[Math.floor(Math.random() * aminoAcids.length)];
+                    }
+
+                    let char = grid[y][x];
+                    let highlightChar = null;
+                    let isFlickering = false;
+                    let glowIntensity = 0;
+
+                    // Check if cell is within dynamic target word areas
+                    for (let p of placements) {
+                        if (y === p.y && x >= p.x && x < p.x + p.text.length) {
+                            let charIndex = x - p.x;
+                            if (p.text[charIndex] !== ' ') {
+                                highlightChar = p.text[charIndex];
+                                
+                                // Calculate glow intensity based on lifecycle (fade in/out)
+                                let lifeRatio = p.life / p.maxLife;
+                                glowIntensity = Math.sin(lifeRatio * Math.PI); // Peaks at middle of life
+
+                                // Decoding/mutation glitch effect at start and end of lifespan
+                                if (p.life < 30 || p.life > p.maxLife - 30) {
+                                    if (Math.random() < 0.4) {
+                                        highlightChar = aminoAcids[Math.floor(Math.random() * aminoAcids.length)];
+                                        isFlickering = true;
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                    }
+
+                    if (highlightChar) {
+                        ctx.shadowBlur = glowIntensity * 15;
+                        ctx.shadowColor = '#0ea5e9'; // Cyan glow
+                        ctx.fillStyle = isFlickering ? '#38bdf8' : `rgba(14, 165, 233, ${0.4 + glowIntensity * 0.6})`; 
+                        
+                        if (!isFlickering && Math.random() < 0.005) {
+                            ctx.fillText(aminoAcids[Math.floor(Math.random() * aminoAcids.length)], x * fontSize + fontSize / 2, y * fontSize + fontSize / 2);
+                        } else {
+                            ctx.fillText(highlightChar, x * fontSize + fontSize / 2, y * fontSize + fontSize / 2);
+                        }
+                        ctx.shadowBlur = 0; // Reset shadow for next draws
+                    } else {
+                        // Very subtle background characters, visible but low-profile (dark cyan/slate tone)
+                        let bgOpacity = Math.random() < 0.005 ? 0.25 : 0.12;
+                        ctx.fillStyle = `rgba(148, 163, 184, ${bgOpacity})`; // slate-400 color with opacity
+                        ctx.fillText(char, x * fontSize + fontSize / 2, y * fontSize + fontSize / 2);
+                    }
+                }
+            }
+
+            animationFrameId = requestAnimationFrame(drawCanvas);
+        }
+
+        drawCanvas();
+    </script>
+</body>
+</html>
